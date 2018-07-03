@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<tests>
+  <test>
+    <ID>1</ID>
+    <Commentaire>Test numéro 1</Commentaire>
+  </test>
+  <test>
+    <ID>2</ID>
+    <Commentaire>Test numéro 2</Commentaire>
+  </test>
+  <test>
+    <ID>3</ID>
+    <Commentaire>super test3</Commentaire>
+  </test>
+  <test>
+    <ID>4</ID>
+    <Commentaire>mega test</Commentaire>
+  </test>
+  <test>
+    <ID>5</ID>
+    <Commentaire>mega test</Commentaire>
+  </test>
+  <test>
+    <ID>6</ID>
+    <Commentaire>mega test</Commentaire>
+  </test>
+  <test>
+    <ID>7</ID>
+    <Commentaire>mega test</Commentaire>
+  </test>
+</tests>
