@@ -8,10 +8,7 @@
     <ID>2</ID>
     <Commentaire>Test numéro 2</Commentaire>
   </test>
-  <test>
-    <ID>3</ID>
-    <Commentaire>super test3</Commentaire>
-  </test>
+  <test />
   <test>
     <ID>4</ID>
     <Commentaire>mega test</Commentaire>

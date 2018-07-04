@@ -19,11 +19,7 @@ namespace TodoList.Controllers
         //GET: api/test
         public List<TestModel> GetTests()
         {
-            /*List<TestModel> liste = new List<TestModel>();
-            liste.Add(new TestModel { ID = 42, Commentaire = "la réponse" });
-            liste.Add(new TestModel { ID = 39, Commentaire = "température actuelle" });
-            liste.Add(new TestModel { ID = 98, Commentaire = "3-0" });
-            return liste;*/
+           
             XDocument doc = XDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));
             return (from x in doc.Descendants("test")
                     select new TestModel
@@ -50,8 +46,7 @@ namespace TodoList.Controllers
                 return NotFound();
             }
             return Ok(new TestModel { ID = id, Commentaire = "Bravo" });*/
-            XDocument doc = XDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));
-            //var element = from x in doc.Elements("ID") where (int)x.Attribute("ID") == id select x;
+            XDocument doc = XDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));            
             //var test = doc.Descendants("Test").SingleOrDefault(
             //    x => int.Parse(x.Element("ID").Value) == id);
 
@@ -97,5 +92,43 @@ namespace TodoList.Controllers
             doc.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));
             return CreatedAtRoute("DefaultApi", new { id = test.ID }, test);
         }
+        //PUT: api/test        
+        [ResponseType(typeof(TestModel))]
+        public IHttpActionResult PutTest(int id, TestModel test)
+        {
+            
+            if (id != test.ID)
+            {
+                return BadRequest();
+            }
+            XDocument doc = XDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));
+            var element = doc.Descendants("test").SingleOrDefault(
+                x => int.Parse(x.Element("ID").Value) == id);
+            if (element == null)
+            {
+                return NotFound();
+            }            
+            element.Element("Commentaire").SetValue(test.Commentaire);
+            doc.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));
+            return Ok(test);
+        }
+        //DELETE: api/test
+        [ResponseType(typeof(TestModel))]
+        public IHttpActionResult DeleteTest(int id)
+        {
+            XDocument doc = XDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));
+            var deletingElement = doc.Descendants("test").SingleOrDefault(
+                x => int.Parse(x.Element("ID").Value) == id);
+            if (deletingElement == null)
+            {
+                return NotFound();
+            }
+            deletingElement.Remove();
+            doc.Save(System.Web.Hosting.HostingEnvironment.MapPath("~/donnees.xml"));
+
+            return Ok("élément supprimer");
+        }
+
+
     }
 }
