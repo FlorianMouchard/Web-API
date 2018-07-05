@@ -12,7 +12,7 @@ namespace TodoList.Models
 
         [Required(ErrorMessage ="Le champ nom est obligatoire")]
         [MinLength(5, ErrorMessage = "Le nom entré est trop court")]
-        [RegularExpression("^[a-z]$", ErrorMessage ="Caractère invalide")]
+        //[RegularExpression("^[a-z]+$", ErrorMessage ="Caractère invalide")]
         public string Name { get; set; }
 
         //public ICollection<ToDo> ToDos { get; set; }
