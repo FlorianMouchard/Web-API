@@ -15,17 +15,17 @@ namespace TodoList.Controllers
         //ouverture de la connexion à la base de données
         private TodoListDbContext db = new TodoListDbContext();
 
-        public List<Category> GetCategories()
+        //retourne la liste des catégories
+        public IQueryable<Category> GetCategories()
         {
-            return (from x in db.Categories
-                    select x).ToList();
-                    
+            return db.Categories;                    
         }
 
+        //retourne la catégorie suivant l'ID
         [ResponseType(typeof(Category))]
         public IHttpActionResult GetCategory(int id)
         {
-            var cat = db.Categories.SingleOrDefault(x => x.ID == id);
+            var cat = db.Categories.Find(id);
             if(cat == null)
             {
                 return NotFound();
@@ -40,20 +40,27 @@ namespace TodoList.Controllers
             {
                 return BadRequest();
             }
-            var updateCat = db.Categories.SingleOrDefault(x => x.ID == id);
-            if (updateCat == null)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            db.Entry(category).State = System.Data.Entity.EntityState.Modified;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
             {
                 return NotFound();
             }
-            updateCat.Name = category.Name;
-            db.SaveChanges();
-            return Ok(category);
+            
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [ResponseType(typeof(Category))]
         public IHttpActionResult DeleteCategory(int id)
         {
-            var deletingCat = db.Categories.SingleOrDefault(x => x.ID == id);
+            var deletingCat = db.Categories.Find(id);
             if(deletingCat == null)
             {
                 return NotFound();
