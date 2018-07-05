@@ -6,6 +6,7 @@ using System.Web;
 
 namespace TodoList.Models
 {
+    [Table(name:"ToDos")]
     public class ToDo
     {
         public int ID { get; set; }
