@@ -18,7 +18,7 @@ namespace TodoList.Controllers
         //retourne la liste des catégories
         public IQueryable<Category> GetCategories()
         {
-            return db.Categories;                    
+            return db.Categories.Where(x => !x.Deleted);                    
         }
 
         //retourne la catégorie suivant l'ID
@@ -36,6 +36,7 @@ namespace TodoList.Controllers
         [ResponseType(typeof(Category))]
         public IHttpActionResult PutCategory(int id, Category category)
         {
+            
             if (id != category.ID)
             {
                 return BadRequest();

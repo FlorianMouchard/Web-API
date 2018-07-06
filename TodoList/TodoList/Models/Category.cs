@@ -6,9 +6,9 @@ using System.Web;
 
 namespace TodoList.Models
 {
-    public class Category
+    public class Category : BaseModel
     {
-        public int ID { get; set; }
+        //public int ID { get; set; }
 
         [Required(ErrorMessage ="Le champ nom est obligatoire")]
         [MinLength(5, ErrorMessage = "Le nom entré est trop court")]

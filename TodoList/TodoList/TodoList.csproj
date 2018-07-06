@@ -121,7 +121,16 @@
     <Compile Include="Migrations\201807051336341_AddToDo.Designer.cs">
       <DependentUpon>201807051336341_AddToDo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807060800179_UpdateAllModel.cs" />
+    <Compile Include="Migrations\201807060800179_UpdateAllModel.Designer.cs">
+      <DependentUpon>201807060800179_UpdateAllModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807060820182_UpdateDeletedAtBaseModel.cs" />
+    <Compile Include="Migrations\201807060820182_UpdateDeletedAtBaseModel.Designer.cs">
+      <DependentUpon>201807060820182_UpdateDeletedAtBaseModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ToDo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +153,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807051336341_AddToDo.resx">
       <DependentUpon>201807051336341_AddToDo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807060800179_UpdateAllModel.resx">
+      <DependentUpon>201807060800179_UpdateAllModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807060820182_UpdateDeletedAtBaseModel.resx">
+      <DependentUpon>201807060820182_UpdateDeletedAtBaseModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
