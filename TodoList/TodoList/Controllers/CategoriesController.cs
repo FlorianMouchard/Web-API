@@ -66,7 +66,10 @@ namespace TodoList.Controllers
             {
                 return NotFound();
             }
-            db.Categories.Remove(deletingCat);
+            //db.Categories.Remove(deletingCat);
+            deletingCat.Deleted = true;
+            deletingCat.DeletedAt = DateTime.Now;
+            db.Entry(deletingCat).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return Ok("Element supprimé");
         }
