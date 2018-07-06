@@ -10,18 +10,28 @@ using TodoList.Models;
 
 namespace TodoList.Controllers
 {
+    [RoutePrefix("api/categories")]
     public class CategoriesController : ApiController
     {
         //ouverture de la connexion à la base de données
         private TodoListDbContext db = new TodoListDbContext();
 
         //retourne la liste des catégories
+        
         public IQueryable<Category> GetCategories()
         {
             return db.Categories.Where(x => !x.Deleted);                    
         }
 
+        [Route("{name}")]
+        [ResponseType(typeof(Category))]
+        public IQueryable<Category> GetCategories(string name)
+        {
+            return db.Categories.Where(x => !x.Deleted && x.Name.Contains(name));
+        }
+
         //retourne la catégorie suivant l'ID
+        [Route("{id:int}")]
         [ResponseType(typeof(Category))]
         public IHttpActionResult GetCategory(int id)
         {
@@ -33,6 +43,7 @@ namespace TodoList.Controllers
             return Ok(cat);
         }
 
+        [Route("{id:int}")]
         [ResponseType(typeof(Category))]
         public IHttpActionResult PutCategory(int id, Category category)
         {
@@ -58,6 +69,7 @@ namespace TodoList.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Route("{id:int}")]
         [ResponseType(typeof(Category))]
         public IHttpActionResult DeleteCategory(int id)
         {
@@ -74,6 +86,7 @@ namespace TodoList.Controllers
             return Ok("Element supprimé");
         }
 
+        
         [ResponseType(typeof(Category))]
         public IHttpActionResult PostCategory(Category category)
         {

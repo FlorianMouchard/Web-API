@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
+
 namespace TodoList.Models
 {
     public abstract class BaseModel
     {
+        
         public int ID { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]        
         public DateTime CreatedAt { get; set; }
 
         public bool Deleted { get; set; }

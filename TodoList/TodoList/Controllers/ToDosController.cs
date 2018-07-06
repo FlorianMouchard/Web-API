@@ -13,6 +13,7 @@ using TodoList.Models;
 
 namespace TodoList.Controllers
 {
+    [RoutePrefix("api/todos")]
     public class ToDosController : ApiController
     {
         private TodoListDbContext db = new TodoListDbContext();
@@ -26,10 +27,30 @@ namespace TodoList.Controllers
         // GET: api/ToDos
         public IQueryable<ToDo> GetToDos()
         {
-            return db.ToDos.Include(x => x.Category);
+            return db.ToDos.Where(x => !x.Deleted).Include(x => x.Category);
         }
 
+        //GET: api/Todos/search
+        [Route("search")]
+        public IQueryable<ToDo> GetSearch(string name = "", int? categoryID = null, bool? done = null, DateTime? deadline = null)
+        {
+            var query = db.ToDos.Where(x => !x.Deleted);
+
+            if (!string.IsNullOrWhiteSpace(name))
+                query = query.Where(x => x.Name.Contains(name)).Include(x =>x.Category);
+            if (categoryID != null)
+                query = query.Where(x => x.CategoryID == categoryID);
+            if (done != null)
+                query = query.Where(x => x.Done == done);
+            if (deadline != null)
+                query = query.Where(x => x.DeadLine == deadline);
+
+            return query;
+        }
+
+
         // GET: api/ToDos/5
+        [Route("{id:int}")]
         [ResponseType(typeof(ToDo))]
         public IHttpActionResult GetToDo(int id)
         {
@@ -42,7 +63,15 @@ namespace TodoList.Controllers
             return Ok(toDo);
         }
 
+        [Route("{name}")]
+        [ResponseType(typeof(ToDo))]
+        public IQueryable<ToDo> GetToDo(string name)
+        {
+            return db.ToDos.Where(x => !x.Deleted && x.Name.Contains(name));
+        }
+
         // PUT: api/ToDos/5
+        [Route("{id:int}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutToDo(int id, ToDo toDo)
         {
@@ -93,6 +122,7 @@ namespace TodoList.Controllers
         }
 
         // DELETE: api/ToDos/5
+        [Route("{id:int}")]
         [ResponseType(typeof(ToDo))]
         public IHttpActionResult DeleteToDo(int id)
         {
@@ -102,7 +132,10 @@ namespace TodoList.Controllers
                 return NotFound();
             }
 
-            db.ToDos.Remove(toDo);
+            //db.ToDos.Remove(toDo);
+            toDo.Deleted = true;
+            toDo.DeletedAt = DateTime.Now;
+            db.Entry(toDo).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
             return Ok(toDo);
